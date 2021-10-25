@@ -3,13 +3,18 @@
 Console.Title = "Tic-Tac-Toe";
 GameManager gameManager = new GameManager();
 //gameManager.CreatePlayers();
+//gameManager.SetActivePlayer();
 gameManager.CreateBoard();
 gameManager.DrawBoard();
+
+//gameManager.DisplayActivePlayer();
+Console.ReadKey();
 
 public class GameManager
 {
     public Player PlayerOne { get; set; }
     public Player PlayerTwo { get; set; }
+    public Player CurrentPlayer { get; set; }
     public GameBoard Board { get; set; }
     public bool IsGameRunning { get; set; }
 
@@ -43,9 +48,21 @@ public class GameManager
         }
     }
 
+    public void DisplayActivePlayer()
+    {
+        Console.WriteLine($"{CurrentPlayer.FirstName}, it is your turn.");
+    }
+
     public void DrawBoard()
     {
         Board.DrawGameBoard();
+    }
+
+    public void SetActivePlayer()
+    {
+        if (CurrentPlayer == null) CurrentPlayer = PlayerOne;
+        else if (CurrentPlayer == PlayerOne) CurrentPlayer = PlayerTwo;
+        else CurrentPlayer = PlayerOne;
     }
 }
 
@@ -54,7 +71,6 @@ public class Player
     public string FirstName { get; set; }
     public int GamesWon { get; set; }
     public char PlayerToken { get; set; }
-    public bool IsCurrentPlayer { get; set; }
 
     public Player(string firstName, char playerToken)
     {
@@ -63,7 +79,6 @@ public class Player
         PlayerToken = playerToken;
     }
 
-    public void CurrentPlayer() => IsCurrentPlayer = true;
     public void PlayerWon() => GamesWon++;
 }
 
@@ -88,7 +103,7 @@ public class GameBoard
         {
             if (i % boardSquareRoot == 0) 
             {
-                Console.Write($"{Board[i - 1].TileDisplay()}");
+                Console.Write($"{Board[i - 1].TileDisplay(i)}");
                 Console.WriteLine();
                 for (int j = 1; j <= boardSquareRoot && i < Board.Length - (boardSquareRoot / 2); j++)
                 {
@@ -97,7 +112,7 @@ public class GameBoard
                 }
                 Console.WriteLine();
             }
-            else Console.Write($"{Board[i - 1].TileDisplay()}|");
+            else Console.Write($"{Board[i - 1].TileDisplay(i)}|");
         }
     }
 }
@@ -134,11 +149,12 @@ public class GameTile
         IsTokenBlank = true;
     }
 
-    public string TileDisplay()
+    public string TileDisplay(int position)
     {
         
         if (IsTokenO) return " O ";
         if (IsTokenX) return " X ";
-        return "   ";
+        if (position.ToString().Length > 1) return $" {position}";
+        return $" {position} ";
     }
 }
