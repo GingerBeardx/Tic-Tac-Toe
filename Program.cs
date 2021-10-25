@@ -2,12 +2,19 @@
 
 Console.Title = "Tic-Tac-Toe";
 GameManager gameManager = new GameManager();
-//gameManager.CreatePlayers();
-//gameManager.SetActivePlayer();
+gameManager.CreatePlayers();
+gameManager.SetActivePlayer();
 gameManager.CreateBoard();
-gameManager.DrawBoard();
 
-//gameManager.DisplayActivePlayer();
+while (gameManager.IsGameRunning)
+{
+    gameManager.DrawBoard();
+    gameManager.DisplayActivePlayer();
+    gameManager.GetTilePosition();
+    gameManager.SetActivePlayer();
+}
+
+
 Console.ReadKey();
 
 public class GameManager
@@ -45,6 +52,30 @@ public class GameManager
             else if (!response) Console.WriteLine("That entry was not a recognizable number.");
             else Console.WriteLine("That response is not a perfect square.");
             Console.WriteLine();
+            IsGameRunning = true;
+        }
+    }
+
+    public void GetTilePosition()
+    {
+        bool accptedResponse = false;
+        int chosenTile;
+        while (!accptedResponse)
+        {
+            Console.Write("Please choose a tile to place your token: ");
+            bool isValidNumber = int.TryParse(Console.ReadLine(), out chosenTile);
+            if (isValidNumber && chosenTile > 0 && chosenTile <= Board.Board.Length)
+            {
+                if (Board.Board[chosenTile - 1].IsTokenBlank)
+                {
+                    accptedResponse = true;
+                    if (CurrentPlayer.PlayerToken == 'X') Board.Board[chosenTile - 1].SetTokenX();
+                    else if (CurrentPlayer.PlayerToken == 'O') Board.Board[chosenTile - 1].SetTokenO();
+                    Board.Board[chosenTile - 1].IsTokenBlank = false;
+                }
+                else Console.WriteLine("That position is taken.");
+            }
+            else Console.WriteLine("That position is not valid.");
         }
     }
 
@@ -55,6 +86,7 @@ public class GameManager
 
     public void DrawBoard()
     {
+        Console.Clear();
         Board.DrawGameBoard();
     }
 
