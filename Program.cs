@@ -2,8 +2,9 @@
 
 Console.Title = "Tic-Tac-Toe";
 GameManager gameManager = new GameManager();
-gameManager.CreatePlayers();
+//gameManager.CreatePlayers();
 gameManager.CreateBoard();
+gameManager.DrawBoard();
 
 public class GameManager
 {
@@ -31,9 +32,20 @@ public class GameManager
         {
             Console.Write("Please enter the number of tiles for the game board (should be a perfect square): ");
             bool response = int.TryParse(Console.ReadLine(), out boardTiles);
-            if (Math.Sqrt(boardTiles) % 1 == 0) isValid = true;
+            if (Math.Sqrt(boardTiles) % 1 == 0 && response && boardTiles > 0) 
+            {
+                Board = new GameBoard(boardTiles);
+                isValid = true;
+            } 
+            else if (!response) Console.WriteLine("That entry was not a recognizable number.");
             else Console.WriteLine("That response is not a perfect square.");
+            Console.WriteLine();
         }
+    }
+
+    public void DrawBoard()
+    {
+        Board.DrawGameBoard();
     }
 }
 
