@@ -20,7 +20,7 @@ public class GameManager
         string playerTwoName = Console.ReadLine();
 
         PlayerOne = new Player(playerOneName, 'X');
-        PlayerTwo = new Player(playerTwoName, 'Y');
+        PlayerTwo = new Player(playerTwoName, 'O');
     }
 
     public void CreateBoard()
@@ -31,14 +31,8 @@ public class GameManager
         {
             Console.Write("Please enter the number of tiles for the game board (should be a perfect square): ");
             bool response = int.TryParse(Console.ReadLine(), out boardTiles);
-            if (Math.Sqrt(boardTiles) % 1 == 0)
-            {
-                isValid = true;
-            }
-            else
-            {
-                Console.WriteLine("That response is not a perfect square.");
-            }
+            if (Math.Sqrt(boardTiles) % 1 == 0) isValid = true;
+            else Console.WriteLine("That response is not a perfect square.");
         }
     }
 }
@@ -57,7 +51,6 @@ public class Player
         PlayerToken = playerToken;
     }
 
-
     public void CurrentPlayer() => IsCurrentPlayer = true;
     public void PlayerWon() => GamesWon++;
 }
@@ -73,7 +66,6 @@ public class GameBoard
         {
             Board[i] = new GameTile();
         }
-        
     }
 
     public void DrawGameBoard()
@@ -93,10 +85,7 @@ public class GameBoard
                 }
                 Console.WriteLine();
             }
-            else
-            {
-                Console.Write($"{Board[i - 1].TileDisplay()}|");
-            }
+            else Console.Write($"{Board[i - 1].TileDisplay()}|");
         }
     }
 }
