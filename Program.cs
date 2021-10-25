@@ -11,6 +11,8 @@ while (gameManager.IsGameRunning)
     gameManager.DrawBoard();
     gameManager.DisplayActivePlayer();
     gameManager.GetTilePosition();
+    gameManager.DrawBoard();
+    gameManager.CheckForWinner();
     gameManager.SetActivePlayer();
 }
 
@@ -34,6 +36,36 @@ public class GameManager
 
         PlayerOne = new Player(playerOneName, 'X');
         PlayerTwo = new Player(playerTwoName, 'O');
+    }
+
+    public void CheckForWinner()
+    {
+        int loops = Convert.ToInt32(Math.Sqrt(Board.Board.Length));
+        int consecutive = 0;
+        int startingPosition = 0;
+        bool foundWinner = false;
+        //Check Rows
+        for (int i = 0; i < Board.Board.Length; i++)
+        {
+            if (foundWinner) break;
+            for (int j = startingPosition; j < startingPosition + loops; j++)
+            {
+                if (j >= Board.Board.Length) break;
+                if (Board.Board[j].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                else consecutive = 0;        
+            }
+            if (consecutive == 3) foundWinner = true;
+            else startingPosition += loops;
+        }
+        //Check columns
+        //Check diagonals
+        if (foundWinner)
+        {
+            Console.WriteLine($"{CurrentPlayer.FirstName} wins!!!");
+            IsGameRunning = false;
+        }
+
+
     }
 
     public void CreateBoard()
@@ -71,7 +103,6 @@ public class GameManager
                     accptedResponse = true;
                     if (CurrentPlayer.PlayerToken == 'X') Board.Board[chosenTile - 1].SetTokenX();
                     else if (CurrentPlayer.PlayerToken == 'O') Board.Board[chosenTile - 1].SetTokenO();
-                    Board.Board[chosenTile - 1].IsTokenBlank = false;
                 }
                 else Console.WriteLine("That position is taken.");
             }
@@ -188,5 +219,12 @@ public class GameTile
         if (IsTokenX) return " X ";
         if (position.ToString().Length > 1) return $" {position}";
         return $" {position} ";
+    }
+
+    public char GetToken()
+    {
+        if (IsTokenO) return 'O';
+        if (IsTokenX) return 'X';
+        else return ' ';
     }
 }
