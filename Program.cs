@@ -54,10 +54,25 @@ public class GameManager
                 if (Board.Board[j].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
                 else consecutive = 0;        
             }
-            if (consecutive == 3) foundWinner = true;
+            if (consecutive == loops) foundWinner = true;
             else startingPosition += loops;
         }
+
         //Check columns
+        startingPosition = 0;
+        consecutive = 0;
+        for (int i = 0; i < loops; i++)
+        {
+            int checkSpot = 0 + i;
+            for (int j = 0; j < loops; j++)
+            {
+                if (Board.Board[checkSpot].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                else consecutive = 0;
+                checkSpot += loops;
+            }
+            if (consecutive == loops) foundWinner = true;
+            
+        }
         //Check diagonals
         if (foundWinner)
         {
