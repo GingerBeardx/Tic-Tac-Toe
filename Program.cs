@@ -2,21 +2,21 @@
 
 Console.Title = "Tic-Tac-Toe";
 GameManager gameManager = new GameManager();
+//Todo: Create a game greeting
 gameManager.CreatePlayers();
 gameManager.SetActivePlayer();
 gameManager.CreateBoard();
 
 while (gameManager.IsGameRunning)
 {
+    //Todo: Display games won dashboard
     gameManager.DrawBoard();
     gameManager.DisplayActivePlayer();
     gameManager.GetTilePosition();
     gameManager.DrawBoard();
     gameManager.CheckForWinner();
-    if (!gameManager.IsGameRunning)
-    {
-        break;
-    }
+    //Todo: Check for tie condition
+    if (!gameManager.IsGameRunning) break;
     else gameManager.SetActivePlayer();
 }
 Console.WriteLine("Goodbye!");
@@ -36,6 +36,7 @@ public class GameManager
         string playerOneName = Console.ReadLine();
         Console.Write("Please enter a name for player two: ");
         string playerTwoName = Console.ReadLine();
+        //Todo: Add name validation
 
         PlayerOne = new Player(playerOneName, 'X');
         PlayerTwo = new Player(playerTwoName, 'O');
@@ -47,6 +48,7 @@ public class GameManager
         int consecutive = 0;
         int startingPosition = 0;
         bool foundWinner = false;
+        //Todo: Move win checks to GameBoard class
         //Check Rows
         for (int i = 0; i < Board.Board.Length; i++)
         {
@@ -78,29 +80,29 @@ public class GameManager
         //Check diagonals
         int highValue = loops + 1;
         int lowValue = loops - 1;
-        int checkDiagnal = 0;
+        int checkDiagonal = 0;
         consecutive = 0;
         
         if (!foundWinner)
         {
-            for (int i = 0; i < loops; i++) //left diagnal
+            for (int i = 0; i < loops; i++) //left diagonal
             {
-                if (Board.Board[checkDiagnal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                if (Board.Board[checkDiagonal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
                 else break;
-                checkDiagnal += highValue;
+                checkDiagonal += highValue;
             }
             if (consecutive == loops) foundWinner = true;
         }
 
-        if (!foundWinner) //right diagnal
+        if (!foundWinner) //right diagonal
         {
             consecutive = 0;
-            checkDiagnal = lowValue;
+            checkDiagonal = lowValue;
             for (int i = 0; i < loops; i++)
             {
-                if (Board.Board[checkDiagnal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                if (Board.Board[checkDiagonal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
                 else break;
-                checkDiagnal += lowValue;
+                checkDiagonal += lowValue;
             }
             if (consecutive == loops) foundWinner = true;
         }
@@ -108,6 +110,8 @@ public class GameManager
         if (foundWinner)
         {
             Console.WriteLine($"{CurrentPlayer.FirstName} wins!!!");
+            CurrentPlayer.PlayerWon();
+            //Todo: Move play again prompt to own method
             Console.WriteLine();
             Console.Write("Would you like to play again (Y/N)? ");
             string response = Console.ReadLine();
