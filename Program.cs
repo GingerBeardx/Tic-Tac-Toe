@@ -13,10 +13,13 @@ while (gameManager.IsGameRunning)
     gameManager.GetTilePosition();
     gameManager.DrawBoard();
     gameManager.CheckForWinner();
-    gameManager.SetActivePlayer();
+    if (!gameManager.IsGameRunning)
+    {
+        break;
+    }
+    else gameManager.SetActivePlayer();
 }
-
-
+Console.WriteLine("Goodbye!");
 Console.ReadKey();
 
 public class GameManager
@@ -105,7 +108,18 @@ public class GameManager
         if (foundWinner)
         {
             Console.WriteLine($"{CurrentPlayer.FirstName} wins!!!");
-            IsGameRunning = false;
+            Console.WriteLine();
+            Console.Write("Would you like to play again (Y/N)? ");
+            string response = Console.ReadLine();
+            if (response.ToLower() == "y")
+            {
+                IsGameRunning = true;
+                foreach (GameTile tile in Board.Board)
+                {
+                    tile.ResetTile();
+                }
+            }
+            else IsGameRunning = false;
         }
     }
 
