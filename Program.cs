@@ -59,7 +59,6 @@ public class GameManager
         }
 
         //Check columns
-        startingPosition = 0;
         consecutive = 0;
         for (int i = 0; i < loops; i++)
         {
@@ -74,13 +73,40 @@ public class GameManager
             
         }
         //Check diagonals
+        int highValue = loops + 1;
+        int lowValue = loops - 1;
+        int checkDiagnal = 0;
+        consecutive = 0;
+        
+        if (!foundWinner)
+        {
+            for (int i = 0; i < loops; i++) //left diagnal
+            {
+                if (Board.Board[checkDiagnal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                else break;
+                checkDiagnal += highValue;
+            }
+            if (consecutive == loops) foundWinner = true;
+        }
+
+        if (!foundWinner) //right diagnal
+        {
+            consecutive = 0;
+            checkDiagnal = lowValue;
+            for (int i = 0; i < loops; i++)
+            {
+                if (Board.Board[checkDiagnal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
+                else break;
+                checkDiagnal += lowValue;
+            }
+            if (consecutive == loops) foundWinner = true;
+        }
+
         if (foundWinner)
         {
             Console.WriteLine($"{CurrentPlayer.FirstName} wins!!!");
             IsGameRunning = false;
         }
-
-
     }
 
     public void CreateBoard()
