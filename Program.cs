@@ -1,7 +1,7 @@
 ﻿using System;
 
 Console.Title = "Tic-Tac-Toe";
-GameManager gameManager = new GameManager();
+GameManager gameManager = new();
 //Todo: Create a game greeting
 gameManager.CreatePlayers();
 gameManager.SetActivePlayer();
@@ -130,16 +130,15 @@ public class GameManager
     public void CreateBoard()
     {
         bool isValid = false;
-        int boardTiles = 0;
         while (!isValid)
         {
             Console.Write("Please enter the number of tiles for the game board (should be a perfect square): ");
-            bool response = int.TryParse(Console.ReadLine(), out boardTiles);
-            if (Math.Sqrt(boardTiles) % 1 == 0 && response && boardTiles > 0) 
+            bool response = int.TryParse(Console.ReadLine(), out int boardTiles);
+            if (Math.Sqrt(boardTiles) % 1 == 0 && response && boardTiles > 0)
             {
                 Board = new GameBoard(boardTiles);
                 isValid = true;
-            } 
+            }
             else if (!response) Console.WriteLine("That entry was not a recognizable number.");
             else Console.WriteLine("That response is not a perfect square.");
             Console.WriteLine();
@@ -150,11 +149,10 @@ public class GameManager
     public void GetTilePosition()
     {
         bool accptedResponse = false;
-        int chosenTile;
         while (!accptedResponse)
         {
             Console.Write("Please choose a tile to place your token: ");
-            bool isValidNumber = int.TryParse(Console.ReadLine(), out chosenTile);
+            bool isValidNumber = int.TryParse(Console.ReadLine(), out int chosenTile);
             if (isValidNumber && chosenTile > 0 && chosenTile <= Board.Board.Length)
             {
                 if (Board.Board[chosenTile - 1].IsTokenBlank)
