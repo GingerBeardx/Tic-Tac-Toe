@@ -28,18 +28,7 @@ public class GameManager
         bool foundWinner = false;
         //Todo: Move win checks to GameBoard class
         //Check Rows
-        for (int i = 0; i < Board.Board.Length; i++)
-        {
-            if (foundWinner) break;
-            for (int j = startingPosition; j < startingPosition + loops; j++)
-            {
-                if (j >= Board.Board.Length) break;
-                if (Board.Board[j].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
-                else consecutive = 0;        
-            }
-            if (consecutive == loops) foundWinner = true;
-            else startingPosition += loops;
-        }
+        foundWinner = Board.CheckRowsForWin(CurrentPlayer);
 
         //Check columns
         consecutive = 0;

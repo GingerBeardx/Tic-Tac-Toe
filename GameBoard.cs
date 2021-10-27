@@ -3,6 +3,7 @@
 public class GameBoard
 {
     public GameTile[] Board { get; set; }
+    private int BoardSquare { get => (int)Math.Sqrt(Board.Length);  }
 
     public GameBoard(int tiles)
     {
@@ -32,5 +33,26 @@ public class GameBoard
             }
             else Console.Write($"{Board[i - 1].TileDisplay(i)}|");
         }
+    }
+
+    public bool CheckRowsForWin(Player currentPlayer)
+    {
+        bool foundWinner = false;
+        int startingPosition = 0;
+        int consecutive = 0;
+
+        for (int i = 0; i < Board.Length; i++)
+        {
+            if (foundWinner) break;
+            for (int j = startingPosition; j < startingPosition + BoardSquare; j++)
+            {
+                if (j >= Board.Length) break;
+                if (Board[j].GetToken() == currentPlayer.PlayerToken) consecutive++;
+                else consecutive = 0;
+            }
+            if (consecutive == BoardSquare) return true;
+            else startingPosition += BoardSquare;
+        }
+        return false;
     }
 }
