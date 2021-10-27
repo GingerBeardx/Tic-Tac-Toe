@@ -1,15 +1,18 @@
-﻿public class Player
+﻿namespace Tic_Tac_Toe
 {
-    public string FirstName { get; set; }
-    public int GamesWon { get; set; }
-    public char PlayerToken { get; set; }
-
-    public Player(string firstName, char playerToken)
+    public class Player
     {
-        FirstName = firstName;
-        GamesWon = 0;
-        PlayerToken = playerToken;
-    }
+        public string FirstName { get; set; }
+        public int GamesWon { get; set; }
+        public char PlayerToken { get; set; }
 
-    public void PlayerWon() => GamesWon++;
+        public Player(string firstName, char playerToken)
+        {
+            FirstName = firstName;
+            GamesWon = 0;
+            PlayerToken = playerToken;
+        }
+
+        public void PlayerWon() => GamesWon++;
+    }
 }
