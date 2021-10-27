@@ -22,46 +22,9 @@ public class GameManager
 
     public void CheckForWinner()
     {
-        int loops = Convert.ToInt32(Math.Sqrt(Board.Board.Length));
-        int consecutive = 0;
-        int startingPosition = 0;
-        bool foundWinner = false;
-        //Todo: Move win checks to GameBoard class
-        //Check Rows
-        foundWinner = Board.CheckRowsForWin(CurrentPlayer);
-
-        //Check columns
+        bool foundWinner = Board.CheckRowsForWin(CurrentPlayer);
         if (!foundWinner) foundWinner = Board.CheckColumnsForWin(CurrentPlayer);
-
-        //Check diagonals
-        int highValue = loops + 1;
-        int lowValue = loops - 1;
-        int checkDiagonal = 0;
-        consecutive = 0;
-        
-        if (!foundWinner)
-        {
-            for (int i = 0; i < loops; i++) //left diagonal
-            {
-                if (Board.Board[checkDiagonal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
-                else break;
-                checkDiagonal += highValue;
-            }
-            if (consecutive == loops) foundWinner = true;
-        }
-
-        if (!foundWinner) //right diagonal
-        {
-            consecutive = 0;
-            checkDiagonal = lowValue;
-            for (int i = 0; i < loops; i++)
-            {
-                if (Board.Board[checkDiagonal].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
-                else break;
-                checkDiagonal += lowValue;
-            }
-            if (consecutive == loops) foundWinner = true;
-        }
+        if (!foundWinner) foundWinner = Board.CheckdiagonalsForWin(CurrentPlayer);
 
         if (foundWinner)
         {

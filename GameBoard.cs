@@ -16,17 +16,16 @@ public class GameBoard
 
     public void DrawGameBoard()
     {
-        double boardSquareRoot = Math.Sqrt(Board.Length);
         Console.WriteLine();
         for (int i = 1; i <= Board.Length; i++)
         {
-            if (i % boardSquareRoot == 0) 
+            if (i % BoardSquare == 0) 
             {
                 Console.Write($"{Board[i - 1].TileDisplay(i)}");
                 Console.WriteLine();
-                for (int j = 1; j <= boardSquareRoot && i < Board.Length - (boardSquareRoot / 2); j++)
+                for (int j = 1; j <= BoardSquare && i < Board.Length - (BoardSquare / 2); j++)
                 {
-                    if (j % boardSquareRoot != 0) Console.Write("---|");
+                    if (j % BoardSquare != 0) Console.Write("---|");
                     else Console.Write("---");
                 }
                 Console.WriteLine();
@@ -35,6 +34,8 @@ public class GameBoard
         }
     }
 
+    #region Win Conditions
+    //Todo: Add differnt color to winning tiles.
     public bool CheckRowsForWin(Player currentPlayer)
     {
         bool foundWinner = false;
@@ -72,4 +73,33 @@ public class GameBoard
         }
         return false;
     }
+
+    public bool CheckdiagonalsForWin(Player currentPlayer)
+    {
+        int highValue = BoardSquare + 1;
+        int lowValue = BoardSquare - 1;
+        int checkDiagonal = 0;
+        int consecutive = 0;
+
+        for (int i = 0; i < BoardSquare; i++) //left diagonal
+        {
+            if (Board[checkDiagonal].GetToken() == currentPlayer.PlayerToken) consecutive++;
+            else break;
+            checkDiagonal += highValue;
+        }
+        if (consecutive == BoardSquare) return true;
+
+        consecutive = 0;
+        checkDiagonal = lowValue;
+        for (int i = 0; i < BoardSquare; i++) //right diagonal
+        {
+            if (Board[checkDiagonal].GetToken() == currentPlayer.PlayerToken) consecutive++;
+            else break;
+            checkDiagonal += lowValue;
+        }
+        if (consecutive == BoardSquare) return true;
+
+        return false;
+    }
+    #endregion
 }
