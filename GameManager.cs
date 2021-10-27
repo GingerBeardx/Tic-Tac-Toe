@@ -31,19 +31,8 @@ public class GameManager
         foundWinner = Board.CheckRowsForWin(CurrentPlayer);
 
         //Check columns
-        consecutive = 0;
-        for (int i = 0; i < loops; i++)
-        {
-            int checkSpot = 0 + i;
-            for (int j = 0; j < loops; j++)
-            {
-                if (Board.Board[checkSpot].GetToken() == CurrentPlayer.PlayerToken) consecutive++;
-                else consecutive = 0;
-                checkSpot += loops;
-            }
-            if (consecutive == loops) foundWinner = true;
-            
-        }
+        if (!foundWinner) foundWinner = Board.CheckColumnsForWin(CurrentPlayer);
+
         //Check diagonals
         int highValue = loops + 1;
         int lowValue = loops - 1;

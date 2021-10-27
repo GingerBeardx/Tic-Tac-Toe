@@ -55,4 +55,21 @@ public class GameBoard
         }
         return false;
     }
+
+    public bool CheckColumnsForWin(Player currentPlayer)
+    {
+        int consecutive = 0;
+        for (int i = 0; i < BoardSquare; i++)
+        {
+            int checkSpot = 0 + i;
+            for (int j = 0; j < BoardSquare; j++)
+            {
+                if (Board[checkSpot].GetToken() == currentPlayer.PlayerToken) consecutive++;
+                else consecutive = 0;
+                checkSpot += BoardSquare;
+            }
+            if (consecutive == BoardSquare) return true;
+        }
+        return false;
+    }
 }
