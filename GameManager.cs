@@ -30,19 +30,7 @@ public class GameManager
         {
             Console.WriteLine($"{CurrentPlayer.FirstName} wins!!!");
             CurrentPlayer.PlayerWon();
-            //Todo: Move play again prompt to own method
-            Console.WriteLine();
-            Console.Write("Would you like to play again (Y/N)? ");
-            string response = Console.ReadLine();
-            if (response.ToLower() == "y")
-            {
-                IsGameRunning = true;
-                foreach (GameTile tile in Board.Board)
-                {
-                    tile.ResetTile();
-                }
-            }
-            else IsGameRunning = false;
+            IsGameRunning = false;
         }
     }
 
@@ -102,5 +90,21 @@ public class GameManager
         if (CurrentPlayer == null) CurrentPlayer = PlayerOne;
         else if (CurrentPlayer == PlayerOne) CurrentPlayer = PlayerTwo;
         else CurrentPlayer = PlayerOne;
+    }
+
+    public void PlayAgainPrompt()
+    {
+        Console.WriteLine();
+        Console.Write("Would you like to play again (Y/N)? ");
+        string response = Console.ReadLine();
+        if (response.ToLower() == "y")
+        {
+            IsGameRunning = true;
+            foreach (GameTile tile in Board.Board)
+            {
+                tile.ResetTile();
+            }
+        }
+        else IsGameRunning = false;
     }
 }

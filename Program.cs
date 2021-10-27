@@ -22,7 +22,7 @@ namespace TicTacToe
                 gameManager.DrawBoard();
                 gameManager.CheckForWinner();
                 //Todo: Check for tie condition
-                if (!gameManager.IsGameRunning) break;
+                if (!gameManager.IsGameRunning) gameManager.PlayAgainPrompt();
                 else gameManager.SetActivePlayer();
             }
             Console.WriteLine("Goodbye!");
