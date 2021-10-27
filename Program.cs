@@ -22,10 +22,12 @@ namespace TicTacToe
                 gameManager.GetTilePosition();
                 gameManager.DrawBoard();
                 gameManager.CheckForWinner();
-                //Todo: Check for tie condition
+                if (gameManager.IsGameRunning) gameManager.CheckForTie();
+                //Todo: Modify play again prompt to ask if they want to play again with same players and board size.
                 if (!gameManager.IsGameRunning) gameManager.PlayAgainPrompt();
                 else gameManager.SetActivePlayer();
             }
+            //Todo: Add loop to change players/board size or quit game.
             Console.WriteLine("Goodbye!");
             Console.ReadKey();
         }

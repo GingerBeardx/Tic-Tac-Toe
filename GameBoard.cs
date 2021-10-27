@@ -104,5 +104,14 @@ namespace Tic_Tac_Toe
             return false;
         }
         #endregion
+
+        public bool CheckForTie()
+        {
+            foreach (GameTile tile in Board)
+            {
+                if (tile.IsTokenBlank) return false;
+            }
+            return true;
+        }
     }
 }

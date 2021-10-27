@@ -109,5 +109,15 @@ namespace Tic_Tac_Toe
             }
             else IsGameRunning = false;
         }
+
+        public void CheckForTie()
+        {
+            bool isTie = Board.CheckForTie();
+            if(isTie)
+            {
+                IsGameRunning = false;
+                Console.WriteLine("Nicely played! There is no victor for this round!");
+            }
+        }
     }
 }
