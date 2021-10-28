@@ -78,12 +78,13 @@ namespace Tic_Tac_Toe
 
         public void DisplayActivePlayer()
         {
-            Console.WriteLine($"{CurrentPlayer.FirstName}, it is your turn.");
+            Console.WriteLine($"{CurrentPlayer.FirstName}, it is your turn to place your -{CurrentPlayer.PlayerToken}-.");
         }
 
         public void DrawBoard()
         {
             Console.Clear();
+            DisplayTitle();
             Board.DrawGameBoard();
         }
 
@@ -118,6 +119,23 @@ namespace Tic_Tac_Toe
                 IsGameRunning = false;
                 Console.WriteLine("Nicely played! There is no victor for this round!");
             }
+        }
+
+        public static void DisplayGreeting()
+        {
+            DisplayTitle();
+            Console.WriteLine("Welcome to Tic-Tac-Tum!");
+            Console.WriteLine("Where you can play classic tic-tac-toe on whatever size grid you like!");
+            Console.WriteLine("As long as it's a square, you're good to go!");
+            Console.WriteLine();
+        }
+
+        public static void DisplayTitle()
+        {
+            Console.WriteLine();
+            Console.WriteLine("▀█▀ █ █▀▀ ▄▄ ▀█▀ ▄▀█ █▀▀ ▄▄ ▀█▀ █░█ █▀▄▀█");
+            Console.WriteLine("░█░ █ █▄▄ ░░ ░█░ █▀█ █▄▄ ░░ ░█░ █▄█ █░▀░█");
+            Console.WriteLine();
         }
     }
 }

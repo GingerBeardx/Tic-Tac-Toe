@@ -7,9 +7,9 @@ namespace TicTacToe
     {
         static void Main()
         {
-            Console.Title = "Tic-Tac-Toe";
+            Console.Title = "Tic-Tac-Tum (ver 0.75)";
             GameManager gameManager = new();
-            //Todo: Create a game greeting
+            GameManager.DisplayGreeting();
             gameManager.CreatePlayers();
             gameManager.SetActivePlayer();
             gameManager.CreateBoard();
