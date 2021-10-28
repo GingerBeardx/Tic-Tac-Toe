@@ -62,6 +62,7 @@ namespace Tic_Tac_Toe
             {
                 Console.Write("Please choose a tile to place your token: ");
                 bool isValidNumber = int.TryParse(Console.ReadLine(), out int chosenTile);
+                //Todo: This token update should also be moved to the GameBoard class
                 if (isValidNumber && chosenTile > 0 && chosenTile <= Board.Board.Length)
                 {
                     if (Board.Board[chosenTile - 1].IsTokenBlank)
@@ -139,7 +140,7 @@ namespace Tic_Tac_Toe
             Console.WriteLine();
         }
 
-        public void DisplayScoreboard()
+        private void DisplayScoreboard()
         {
             string scores = $"{PlayerOne.FirstName}: {PlayerOne.GamesWon} - {PlayerTwo.FirstName}: {PlayerTwo.GamesWon}";
             
@@ -149,7 +150,7 @@ namespace Tic_Tac_Toe
             Console.WriteLine(DisplaySeperator(scores));
         }
 
-        private string DisplaySeperator(string middlestring)
+        private static string DisplaySeperator(string middlestring)
         {
             string retString = "";
             for (int i = 0; i < middlestring.Length + 6; i++)
