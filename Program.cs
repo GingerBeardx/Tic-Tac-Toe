@@ -16,7 +16,6 @@ namespace TicTacToe
 
             while (gameManager.IsGameRunning)
             {
-                //Todo: Display games won dashboard
                 gameManager.DrawBoard();
                 gameManager.DisplayActivePlayer();
                 gameManager.GetTilePosition();

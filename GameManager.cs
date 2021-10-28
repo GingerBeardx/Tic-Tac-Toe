@@ -86,6 +86,7 @@ namespace Tic_Tac_Toe
             Console.Clear();
             DisplayTitle();
             Board.DrawGameBoard();
+            DisplayScoreboard();
         }
 
         public void SetActivePlayer()
@@ -136,6 +137,26 @@ namespace Tic_Tac_Toe
             Console.WriteLine("▀█▀ █ █▀▀ ▄▄ ▀█▀ ▄▀█ █▀▀ ▄▄ ▀█▀ █░█ █▀▄▀█");
             Console.WriteLine("░█░ █ █▄▄ ░░ ░█░ █▀█ █▄▄ ░░ ░█░ █▄█ █░▀░█");
             Console.WriteLine();
+        }
+
+        public void DisplayScoreboard()
+        {
+            string scores = $"{PlayerOne.FirstName}: {PlayerOne.GamesWon} - {PlayerTwo.FirstName}: {PlayerTwo.GamesWon}";
+            
+            Console.WriteLine(DisplaySeperator(scores));
+            Console.WriteLine("Games Won");
+            Console.WriteLine($"{scores}");
+            Console.WriteLine(DisplaySeperator(scores));
+        }
+
+        private string DisplaySeperator(string middlestring)
+        {
+            string retString = "";
+            for (int i = 0; i < middlestring.Length + 6; i++)
+            {
+                retString += "-";
+            }
+            return retString;
         }
     }
 }
