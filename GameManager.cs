@@ -9,6 +9,8 @@ namespace Tic_Tac_Toe
         public Player CurrentPlayer { get; set; }
         public GameBoard Board { get; set; }
         public bool IsGameRunning { get; set; }
+        public bool PlaySamePlayers { get; set; }
+        public bool IsGameOver { get; set; }
 
         public void CreatePlayers()
         {
@@ -97,20 +99,38 @@ namespace Tic_Tac_Toe
             else CurrentPlayer = PlayerOne;
         }
 
-        public void PlayAgainPrompt()
+        public void PlaySameBoardAgainPrompt()
         {
             Console.WriteLine();
-            Console.Write("Would you like to play again (Y/N)? ");
-            string response = Console.ReadLine();
+            Console.Write("Would you like to play again on the same size board (Y/N)? ");
+            IsGameRunning = GetYesNoResponse(Console.ReadLine());
+        }
+
+        public void PlaySamePlayersAgainPrompt()
+        {
+            Console.WriteLine();
+            Console.Write("Would you like to play with the same players (Y/N)? ");
+            PlaySamePlayers = GetYesNoResponse(Console.ReadLine());
+        }
+
+        public void ContinuePlaying()
+        {
+            Console.WriteLine();
+            Console.Write("Do you want to quit the game and see the winner (Y/N)?");
+            IsGameOver = GetYesNoResponse(Console.ReadLine());
+        }
+
+        private bool GetYesNoResponse(string response)
+        {
             if (response.ToLower() == "y")
             {
-                IsGameRunning = true;
                 foreach (GameTile tile in Board.Board)
                 {
                     tile.ResetTile();
                 }
+                return true;
             }
-            else IsGameRunning = false;
+            else return false;
         }
 
         public void CheckForTie()
@@ -148,6 +168,27 @@ namespace Tic_Tac_Toe
             Console.WriteLine("Games Won");
             Console.WriteLine($"{scores}");
             Console.WriteLine(DisplaySeperator(scores));
+        }
+
+        public void DisplayFinalScores()
+        {
+            string playerOneScore = $"Final Score for {PlayerOne.FirstName}: {PlayerOne.GamesWon}";
+            string playerTwoScore = $"Final Score for {PlayerTwo.FirstName}: {PlayerTwo.GamesWon}";
+            
+            Player winner = null;
+            bool hasWinner = PlayerOne.GamesWon != PlayerTwo.GamesWon;
+            if (hasWinner) winner = PlayerOne.GamesWon > PlayerTwo.GamesWon ? PlayerOne : PlayerTwo;
+            
+            string longerScoreString;
+            if (playerOneScore.Length > playerTwoScore.Length) longerScoreString = playerOneScore;
+            else longerScoreString = playerTwoScore;
+
+            Console.WriteLine(DisplaySeperator(longerScoreString));
+            Console.WriteLine(playerOneScore);
+            Console.WriteLine(playerTwoScore);
+            if (!hasWinner) Console.WriteLine("The game was a draw!");
+            else Console.WriteLine($"{winner.FirstName} wins! Congratulations!!!");
+            Console.WriteLine(DisplaySeperator(longerScoreString));
         }
 
         private static string DisplaySeperator(string middlestring)

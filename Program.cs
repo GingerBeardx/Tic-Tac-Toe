@@ -12,21 +12,30 @@ namespace TicTacToe
             GameManager.DisplayGreeting();
             gameManager.CreatePlayers();
             gameManager.SetActivePlayer();
-            gameManager.CreateBoard();
 
-            while (gameManager.IsGameRunning)
+            while (true)
             {
-                gameManager.DrawBoard();
-                gameManager.DisplayActivePlayer();
-                gameManager.GetTilePosition();
-                gameManager.DrawBoard();
-                gameManager.CheckForWinner();
-                if (gameManager.IsGameRunning) gameManager.CheckForTie();
-                //Todo: Modify play again prompt to ask if they want to play again with same players and board size.
-                if (!gameManager.IsGameRunning) gameManager.PlayAgainPrompt();
-                else gameManager.SetActivePlayer();
+                gameManager.CreateBoard();
+
+                while (gameManager.IsGameRunning)
+                {
+                    gameManager.DrawBoard();
+                    gameManager.DisplayActivePlayer();
+                    gameManager.GetTilePosition();
+                    gameManager.DrawBoard();
+                    gameManager.CheckForWinner();
+                    if (gameManager.IsGameRunning) gameManager.CheckForTie();
+                    if (!gameManager.IsGameRunning) gameManager.PlaySameBoardAgainPrompt();
+                    else gameManager.SetActivePlayer();
+                }
+                gameManager.PlaySamePlayersAgainPrompt();
+                if (gameManager.PlaySamePlayers) continue;
+                gameManager.ContinuePlaying();
+                if (gameManager.IsGameOver) break;
+                gameManager.CreatePlayers();
             }
-            //Todo: Add loop to change players/board size or quit game.
+
+            gameManager.DisplayFinalScores();
             Console.WriteLine("Goodbye!");
             Console.ReadKey();
         }
