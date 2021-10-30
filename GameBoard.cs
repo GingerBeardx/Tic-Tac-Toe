@@ -5,7 +5,14 @@ namespace Tic_Tac_Toe
     public class GameBoard
     {
         public GameTile[] Board { get; set; }
+        public int BoardLength { get => Board.Length; }
+        public bool IsTileBlank (int tile)
+        {
+            if (Board[tile - 1].IsTokenBlank) return true;
+            else return false;
+        }
         private int BoardSquare { get => (int)Math.Sqrt(Board.Length); }
+
 
         public GameBoard(int tiles)
         {
@@ -36,8 +43,22 @@ namespace Tic_Tac_Toe
             }
         }
 
+        public bool CheckForTie()
+        {
+            foreach (GameTile tile in Board)
+            {
+                if (tile.IsTokenBlank) return false;
+            }
+            return true;
+        }
+
+        public void PlacePlayerToken(Player player, int chosenTile)
+        {
+            if (player.PlayerToken == 'X') Board[chosenTile - 1].SetTokenX();
+            else if (player.PlayerToken == 'O') Board[chosenTile - 1].SetTokenO();
+        }
+
         #region Win Conditions
-        //Todo: Add differnt color to winning tiles.
         public bool CheckRowsForWin(Player currentPlayer)
         {
             bool foundWinner = false;
@@ -104,14 +125,5 @@ namespace Tic_Tac_Toe
             return false;
         }
         #endregion
-
-        public bool CheckForTie()
-        {
-            foreach (GameTile tile in Board)
-            {
-                if (tile.IsTokenBlank) return false;
-            }
-            return true;
-        }
     }
 }

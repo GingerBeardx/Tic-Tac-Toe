@@ -18,7 +18,6 @@ namespace Tic_Tac_Toe
             string playerOneName = Console.ReadLine();
             Console.Write("Please enter a name for player two: ");
             string playerTwoName = Console.ReadLine();
-            //Todo: Add name validation
 
             PlayerOne = new Player(playerOneName, 'X');
             PlayerTwo = new Player(playerTwoName, 'O');
@@ -64,14 +63,12 @@ namespace Tic_Tac_Toe
             {
                 Console.Write("Please choose a tile to place your token: ");
                 bool isValidNumber = int.TryParse(Console.ReadLine(), out int chosenTile);
-                //Todo: This token update should also be moved to the GameBoard class
-                if (isValidNumber && chosenTile > 0 && chosenTile <= Board.Board.Length)
+                if (isValidNumber && chosenTile > 0 && chosenTile <= Board.BoardLength)
                 {
-                    if (Board.Board[chosenTile - 1].IsTokenBlank)
+                    if (Board.IsTileBlank(chosenTile))
                     {
                         accptedResponse = true;
-                        if (CurrentPlayer.PlayerToken == 'X') Board.Board[chosenTile - 1].SetTokenX();
-                        else if (CurrentPlayer.PlayerToken == 'O') Board.Board[chosenTile - 1].SetTokenO();
+                        Board.PlacePlayerToken(CurrentPlayer, chosenTile);
                     }
                     else Console.WriteLine("That position is taken.");
                 }
